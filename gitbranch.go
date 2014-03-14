@@ -85,6 +85,10 @@ func checkout(base string, dir os.FileInfo, branch string, lock chan string) {
 			lock <- err.Error()
 			return
 		}
+		if err := gitExecute(abs, "pull"); err != nil {
+			lock <- err.Error()
+			return
+		}
 		lock <- fmt.Sprintf("Checked out \"master\" in %#v", abs)
 	}
 }
